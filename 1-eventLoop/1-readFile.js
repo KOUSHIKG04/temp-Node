@@ -8,7 +8,7 @@ readFile('./one.txt', 'utf8', (err, result) => {
     console.log(err)
     return
   }
-  console.log(result)
+  console.log(result) //offloading task here
   console.log('completed first task')
 })
 console.log('starting next task')
