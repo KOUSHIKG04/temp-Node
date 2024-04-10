@@ -6,7 +6,7 @@ const http = require('http');
 const app = http.createServer()
 
 
-//emits (request event) - subcribe to it / listen for it / respond to it
+//emits (Event : request) - subcribe to it / listen for it / respond to it
 app.on('request', (req, res) => {
   res.end('Welcome')
 })
