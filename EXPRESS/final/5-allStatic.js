@@ -1,7 +1,7 @@
 import express from 'express';const app = express(); 
 
 // setup static and middleware
-app.use(express.static('./public'))
+app.use(express.static('./public')) // need to use public folder in project
 
 // app.get('/', (req, res) => {
 //   res.sendFile(path.resolve(__dirname, './navbar-app/index.html'))
