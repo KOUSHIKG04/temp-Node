@@ -1,51 +1,30 @@
-import express, { urlencoded, json } from 'express'
-const app = express()
-import  people  from './data.js'
+import  people  from '../data'
 
-// static assets
-app.use(express.static('./method-public'))
-// parse form data
-app.use(urlencoded({ extended: false }))
-// parse json
-app.use(json())
-
-app.post('/login', (req, res) => {
-  const { name } = req.body
-  if (name) {
-    return res.status(200).send(`Welcome ${name}`)
-  }
-
-  res.status(401).send('Please Provide Credentials')
-
-})
-
-app.get('/api/people', (req, res) => {
+const getPeople = (req, res) => {
   res.status(200).json({ success: true, data: people })
-})
+}
 
-app.post('/api/people', (req, res) => {
+const createPerson = (req, res) => {
   const { name } = req.body
   if (!name) {
     return res
       .status(400)
       .json({ success: false, msg: 'please provide name value' })
   }
-  res.status(201).json({ success: true, person: name })
-})
+  res.status(201).send({ success: true, person: name })
+}
 
-app.post('/api/postman/people', (req, res) => {
+const createPersonPostman = (req, res) => {
   const { name } = req.body
   if (!name) {
     return res
       .status(400)
       .json({ success: false, msg: 'please provide name value' })
   }
-  res.status(201).json({ success: true, data: [...people, name] })
-})
+  res.status(201).send({ success: true, data: [...people, name] })
+}
 
-
-
-app.put('/api/people/:id', (req, res) => {
+const updatePerson = (req, res) => {
   const { id } = req.params
   const { name } = req.body
 
@@ -63,9 +42,9 @@ app.put('/api/people/:id', (req, res) => {
     return person
   })
   res.status(200).json({ success: true, data: newPeople })
-})
+}
 
-app.delete('/api/people/:id', (req, res) => {
+const deletePerson = (req, res) => {
   const person = people.find((person) => person.id === Number(req.params.id))
   if (!person) {
     return res
@@ -76,8 +55,12 @@ app.delete('/api/people/:id', (req, res) => {
     (person) => person.id !== Number(req.params.id)
   )
   return res.status(200).json({ success: true, data: newPeople })
-})
+}
 
-app.listen(5000, () => {
-  console.log('Server is listening on port 5000....')
-})
+export default {
+  getPeople,
+  createPerson,
+  createPersonPostman,
+  updatePerson,
+  deletePerson,
+}
